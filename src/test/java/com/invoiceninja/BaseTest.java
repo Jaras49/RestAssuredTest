@@ -1,5 +1,8 @@
 package com.invoiceninja;
 
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.IOException;
@@ -18,6 +21,13 @@ public abstract class BaseTest {
         properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream(CONFIG_FILE_NAME));
         apiAddress = properties.getProperty("api.address");
+    }
+
+    protected ResponseSpecification assertContentTypeAndResponseCode() {
+        return new ResponseSpecBuilder()
+                .expectContentType(ContentType.JSON)
+                .expectStatusCode(200)
+                .build();
     }
 
     protected String buildRequestUrl(String path) {

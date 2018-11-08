@@ -1,7 +1,6 @@
 package com.invoiceninja.clients;
 
 import com.invoiceninja.BaseTest;
-import io.restassured.http.ContentType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -20,8 +19,7 @@ public class ClientsGetRequestTest extends AbstractClientsTest {
                 .get(buildRequestUrl(clientsResource))
         .then()
                 .assertThat()
-                    .statusCode(200)
-                    .contentType(ContentType.JSON);
+                .spec(assertContentTypeAndResponseCode());
 
         // @formatter:on
     }
@@ -36,8 +34,7 @@ public class ClientsGetRequestTest extends AbstractClientsTest {
                 .get(buildRequestUrl(clientsResource) + "/" + id)
         .then()
                 .assertThat()
-                    .statusCode(200)
-                    .contentType(ContentType.JSON)
+                    .spec(assertContentTypeAndResponseCode())
                     .body("data.id",  equalTo(id))
                     .body("data.name", equalTo(name))
                     .body("data.city", equalTo(city));

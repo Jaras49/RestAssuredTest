@@ -18,6 +18,7 @@ public class ClientsPostRequestTest extends AbstractClientsTest {
         postBody.addProperty("city", "ViceCity");
 
         // @formatter:off
+
             given()
                     .header(BaseTest.X_TOKEN, getToken())
                     .body(postBody.toString())
@@ -26,10 +27,10 @@ public class ClientsPostRequestTest extends AbstractClientsTest {
                     .post(buildRequestUrl(clientsResource))
             .then()
                     .assertThat()
-                        .statusCode(200)
-                        .contentType(ContentType.JSON)
+                        .spec(assertContentTypeAndResponseCode())
                         .body("data.name",equalTo("RestAssured"))
                         .body("data.city", equalTo("ViceCity" ));
+
         // @formatter:on
     }
 }
