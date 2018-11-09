@@ -3,12 +3,24 @@ package com.invoiceninja.clients;
 import com.google.gson.JsonObject;
 import com.invoiceninja.BaseTest;
 import io.restassured.http.ContentType;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-public class ClientsPostRequestTest extends AbstractClientsTest {
+public class ClientsPostRequestTest extends BaseTest {
+
+    private String clientsResource;
+
+    @Override
+    @BeforeMethod
+    public void setUp() throws IOException {
+        super.setUp();
+        clientsResource = properties.getProperty("api.resource.clients");
+    }
 
     @Test
     public void shouldPostNewUser() {

@@ -1,13 +1,25 @@
 package com.invoiceninja.clients;
 
 import com.invoiceninja.BaseTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-public class ClientsGetRequestTest extends AbstractClientsTest {
+public class ClientsGetRequestTest extends BaseTest {
+
+    private String clientsResource;
+
+    @Override
+    @BeforeMethod
+    public void setUp() throws IOException {
+        super.setUp();
+        clientsResource = properties.getProperty("api.resource.clients");
+    }
 
     @Test
     public void shouldGetClients() {

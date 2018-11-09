@@ -14,13 +14,11 @@ public abstract class BaseTest {
     private static final String CONFIG_FILE_NAME = "config.properties";
 
     protected Properties properties;
-    private String apiAddress;
 
     @BeforeMethod
     public void setUp() throws IOException {
         properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream(CONFIG_FILE_NAME));
-        apiAddress = properties.getProperty("api.address");
     }
 
     protected ResponseSpecification assertContentTypeAndResponseCode() {
@@ -31,7 +29,9 @@ public abstract class BaseTest {
     }
 
     protected String buildRequestUrl(String path) {
-        return apiAddress + path;
+        return new StringBuilder(properties.getProperty("api.address"))
+                .append(path)
+                .toString();
     }
 
     protected String getToken() {
